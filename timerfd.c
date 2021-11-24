@@ -57,7 +57,9 @@ static void wait_period(struct periodic_info *info)
 		return;
 	}
 
-	info->wakeups_missed += missed;
+	/* "missed" should always be >= 1, but just to be sure, check it is not 0 anyway */
+	if (missed > 0)
+		info->wakeups_missed += (missed - 1);
 }
 
 static int thread_1_count;
